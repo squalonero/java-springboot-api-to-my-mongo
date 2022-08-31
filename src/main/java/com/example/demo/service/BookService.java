@@ -90,15 +90,12 @@ public class BookService {
         // Find all the items with the genre snacks
         List<Book> list = repository.findAll(genre);
 
-        System.out.println(list);
-
         list.forEach(item -> {
             // Update the genre in each document
             int k = item.getGenres().indexOf(genre);
             item.getGenres().set(k, newGenre);
+            System.out.println("Updating genre of " + item.getTitle() + " to " + newGenre);
         });
-
-        System.out.println(list);
 
         // Save all the items in database
         List<Book> itemsUpdated = repository.saveAll(list);

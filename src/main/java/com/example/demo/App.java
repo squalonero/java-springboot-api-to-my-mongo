@@ -27,23 +27,23 @@ public class App implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    System.out.println("-------------EMPTY TRASH-------------------------------\n");
+    System.out.println(" 🧹🧹🧹 Empty trash 🧹🧹🧹 \n");
     bookService.deleteAllBooks();
-    System.out.println("-------------CREATE BOOKS-------------------------------\n");
+    System.out.println(" ✳️✳️✳️ Create some Books ✳️✳️✳️ \n");
     bookService.createBook();
-    System.out.println("\n----------------SHOW ALL BOOKS---------------------------\n");
+    System.out.println("\n 📖 List all Books 📖 \n");
     bookService.showAllBooks();
-    System.out.println("\n--------------GET ITEM BY NAME-----------------------------------\n");
+    System.out.println("\n 🔍 Get item By title 🔍 \n");
     bookService.getBookByTitle("The Way of the Kings");
-    System.out.println("\n-----------GET ITEMS BY GENRE---------------------------------\n");
+    System.out.println("\n 🔎 Get Books By genre 🔎 \n");
     bookService.getItemsByGenre("horror");
-    System.out.println("\n-----------UPDATE GENRE NAME OF FANTASY GENRE----------------\n");
+    System.out.println("\n 👾 Update genre name of fantasy name 👾 \n");
     bookService.updateGenreTitle("fantasy");
-    System.out.println("\n----------DELETE A BOOK----------------------------------\n");
+    System.out.println("\n ❌ Delete a Book ❌ \n");
     bookService.deleteBook("630670ea730c4cac165437ab");
-    System.out.println("\n------------FINAL COUNT OF BOOKS-------------------------\n");
+    System.out.println("\n 🏁 Final Count of Books 🏁 \n");
     bookService.findCountOfBooks();
-    System.out.println("\n-------------------THANK YOU---------------------------");
+    System.out.println("\n RIP 💀");
   }
 
 
