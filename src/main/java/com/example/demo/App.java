@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import com.example.demo.service.BookService;
 
-
 @SpringBootApplication
 @EnableMongoRepositories
 public class App implements CommandLineRunner {
@@ -21,16 +20,18 @@ public class App implements CommandLineRunner {
     try {
       SpringApplication.run(App.class, args);
     } catch (Exception e) {
-      System.out.println("Errore");
+      System.out.println(e);
+      System.out.println("errore");
+
     }
   }
 
   @Override
   public void run(String... args) {
     System.out.println(" 🧹🧹🧹 Empty trash 🧹🧹🧹 \n");
-    bookService.deleteAllBooks();
+    // bookService.deleteAllBooks();
     System.out.println(" ✳️✳️✳️ Create some Books ✳️✳️✳️ \n");
-    bookService.createBook();
+    // bookService.createBook();
     System.out.println("\n 📖 List all Books 📖 \n");
     bookService.showAllBooks();
     System.out.println("\n 🔍 Get item By title 🔍 \n");
@@ -45,6 +46,5 @@ public class App implements CommandLineRunner {
     bookService.findCountOfBooks();
     System.out.println("\n RIP 💀");
   }
-
 
 }

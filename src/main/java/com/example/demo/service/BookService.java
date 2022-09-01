@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.controllers.Autowire;
 import com.example.demo.model.Book;
 import com.example.demo.repository.BookRepository;
 
@@ -17,27 +18,31 @@ public class BookService {
     private BookRepository repository;
 
     // CREATE
-    public void createBook() {
+    public Book createBook(Book newBook) {
         System.out.println("Data creation started...");
         // we have to create the ArrayList first
-        ArrayList<String> genres = new ArrayList<String>() {
-            {
-                add("horror");
-                add("fantasy");
-            }
-        };
-        ArrayList<String> genres2 = new ArrayList<String>() {
-            {
-                add("thriller");
-                add("drama");
-            }
-        };
-        repository.save(new Book("Added from spring", "sqlnr", 125, genres, 1));
-        repository.save(new Book("Added from spring 2", "sqlnr", 300, genres, 8));
-        repository.save(new Book("Added from spring 3", "sqlnr", 345, genres, 5));
-        repository.save(new Book("Added from spring: Resurrection", "sqlnr", 257, genres2, 9));
-        repository.save(new Book("Added from spring: Origin", "sqlnr", 590, genres2, 9));
-        System.out.println("Data creation complete...");
+        // ArrayList<String> genres = new ArrayList<String>() {
+        // {
+        // add("horror");
+        // add("fantasy");
+        // }
+        // };
+        // ArrayList<String> genres2 = new ArrayList<String>() {
+        // {
+        // add("thriller");
+        // add("drama");
+        // }
+        // };
+
+        return repository
+                .save(new Book(newBook.getTitle(), newBook.getAuthor(), newBook.getPages(), newBook.getGenres(),
+                        newBook.getRating()));
+        // if (entity.get_id() != null) {
+        // return "Book Added Successfully!!";
+        // } else {
+        // return "Ops! C'è stato un errore";
+        // }
+
     }
 
     // DESTROY ALL THE DOCUMENTS
@@ -49,9 +54,9 @@ public class BookService {
 
     // READ
     // 1. Show all the data
-    public void showAllBooks() {
+    public Object showAllBooks() {
 
-        repository.findAll().forEach(item -> System.out.println(getItemDetails(item)));
+        return repository.findAll();
     }
 
     // 2. Get item by title

@@ -3,26 +3,41 @@ package com.example.demo.controllers;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Book;
+import com.example.demo.service.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
+
 public class BookController {
+    @Autowired
+    private BookService service;
 
-    // @RequestMapping("/ciao")
-    // public String saluta() {
-    // return "Welcome";
-    // }
+    ObjectMapper obj = new ObjectMapper();
 
-    // @RequestMapping("/items") // path endpoint
-    // public ArrayList<String> list() {
-    // ArrayList<String> list = new ArrayList<String>();
-    // list.add("Porco");
-    // list.add("Dio");
-    // return list;
-    // }
+    @RequestMapping("/findAll")
+    public Object saluta() {
+        return service.showAllBooks();
+        // return "Welcome";
+    }
+
+    @PostMapping("/create") // path endpoint
+    public Map<String, Object> list(@RequestBody Book book) {
+
+        Book newBook = new Book(book.getTitle(), book.getAuthor(), book.getPages(), book.getGenres(), book.getRating());
+
+        Map<String, Object> res = obj.convertValue(service.createBook(newBook), Map.class);
+
+        return res;
+
+    }
 
     // @RequestMapping("/object")
     // public Map<String, Object> obj() throws JsonProcessingException {
