@@ -71,8 +71,4 @@ public class Book {
         this.rating = rating;
     }
 
-
-
-
-
 }

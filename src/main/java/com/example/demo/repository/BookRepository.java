@@ -22,4 +22,7 @@ public interface BookRepository extends MongoRepository<Book, String> {
     @Query("{genres:{$in:['?0']}}")
     public List<Book> findAll(String genre);
 
+    @Query("{pages:'?0'}")
+    public List<Book> findAll(Integer pages);
+
 }
