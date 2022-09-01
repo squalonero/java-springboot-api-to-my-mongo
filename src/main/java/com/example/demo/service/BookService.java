@@ -1,14 +1,16 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controllers.Autowire;
 import com.example.demo.model.Book;
+import com.example.demo.model.Generic;
 import com.example.demo.repository.BookRepository;
 
 @Service
@@ -20,29 +22,13 @@ public class BookService {
     // CREATE
     public Book createBook(Book newBook) {
         System.out.println("Data creation started...");
-        // we have to create the ArrayList first
-        // ArrayList<String> genres = new ArrayList<String>() {
-        // {
-        // add("horror");
-        // add("fantasy");
-        // }
-        // };
-        // ArrayList<String> genres2 = new ArrayList<String>() {
-        // {
-        // add("thriller");
-        // add("drama");
-        // }
-        // };
-
         return repository
-                .save(new Book(newBook.getTitle(), newBook.getAuthor(), newBook.getPages(), newBook.getGenres(),
+                .save(new Book(
+                        newBook.getTitle(),
+                        newBook.getAuthor(),
+                        newBook.getPages(),
+                        newBook.getGenres(),
                         newBook.getRating()));
-        // if (entity.get_id() != null) {
-        // return "Book Added Successfully!!";
-        // } else {
-        // return "Ops! C'è stato un errore";
-        // }
-
     }
 
     // DESTROY ALL THE DOCUMENTS
@@ -55,30 +41,34 @@ public class BookService {
     // READ
     // 1. Show all the data
     public Object showAllBooks() {
-
         return repository.findAll();
     }
 
     // 2. Get item by title
-    public void getBookByTitle(String title) {
+    public Book getBookByTitle(String title) {
         System.out.println("Getting item by title: " + title);
         try {
             Book item = repository.findByTitle(title);
-            System.out.println(getItemDetails(item));
+            return item;
         } catch (Exception e) {
             System.out.println("Item not found");
+            return null;
         }
     }
 
     // 3. Get title and quantity of a all items of a particular genre
-    public void getItemsByGenre(String genre) {
+    public List<Book> getItemsByGenre(String genre) {
         System.out.println("Getting items for the genre " + genre);
         try {
             List<Book> list = repository.findAll(genre);
-            list.forEach(item -> System.out.println("Title: " + item.getTitle() + ", Author: " + item.getAuthor()));
+            return list;
+            // list.forEach(item -> System.out.println("Title: " + item.getTitle() + ",
+            // Author: " + item.getAuthor()));
         } catch (Exception e) {
             System.out.println("No items found for the genre " + genre);
+            return null;
         }
+
     }
 
     // 4. Get count of documents in the collection
@@ -107,6 +97,19 @@ public class BookService {
 
         if (itemsUpdated != null)
             System.out.println("Successfully updated " + itemsUpdated.size() + " items.");
+    }
+
+    public List<Book> filterByKey(String key, String filter) {
+        if (key.equals("genres"))
+            return repository.filterByGenre(filter);
+
+        Integer num;
+        try {
+            num = Integer.parseInt(filter);
+        } catch (NumberFormatException nfe) {
+            return repository.filterByKey(key, filter);
+        }
+        return repository.filterByKey(key, num);
     }
 
     // We can

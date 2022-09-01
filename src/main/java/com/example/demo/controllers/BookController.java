@@ -1,12 +1,14 @@
 package com.example.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Book;
@@ -22,21 +24,40 @@ public class BookController {
 
     ObjectMapper obj = new ObjectMapper();
 
+    // Request for all books in collection
     @RequestMapping("/findAll")
-    public Object saluta() {
+    public Object findAll() {
         return service.showAllBooks();
-        // return "Welcome";
     }
 
+    // filter list by key needs to specify the key and the filter value
+    // now works only for strings values
+    @RequestMapping("/filterByTitle")
+    public List<Book> findByTitle(@RequestParam String key, String filter) {
+        return service.filterByKey(key, filter);
+    }
+
+    @RequestMapping("/filterByKey")
+    public List<Book> findByKey(@RequestParam String key, String filter) {
+        return service.filterByKey(key, filter);
+    }
+
+    // Insert new Book in DB
     @PostMapping("/create") // path endpoint
-    public Map<String, Object> list(@RequestBody Book book) {
+    public Book create(@RequestBody Book book) {
+        return service.createBook(book);
+    }
 
-        Book newBook = new Book(book.getTitle(), book.getAuthor(), book.getPages(), book.getGenres(), book.getRating());
+    // Find all books that matches a specific genre - needs query parameter
+    // ../search?genre=yourValue
+    @RequestMapping("/search")
+    public List<Book> findByGenre(@RequestParam String genre) {
+        return service.getItemsByGenre(genre);
+    }
 
-        Map<String, Object> res = obj.convertValue(service.createBook(newBook), Map.class);
-
-        return res;
-
+    @PostMapping("/delete")
+    public void delete(@RequestParam String id) {
+        service.deleteBook(id);
     }
 
     // @RequestMapping("/object")

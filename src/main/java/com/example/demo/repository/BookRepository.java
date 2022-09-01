@@ -7,22 +7,29 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Book;
+import com.example.demo.model.Generic;
 
 @Repository
 public interface BookRepository extends MongoRepository<Book, String> {
 
-    @Query("{title:'?0'}") // query annotation marks this method as a query method with required parameter
+    @Query("{title:?0}") // query annotation marks this method as a query method with required parameter
     public Book findByTitle(String title);
 
-    @Query("{author:'?0'}")
+    @Query("{author:?0}")
     public List<Book> findByAuthor(String author);
 
     public long count();
 
-    @Query("{genres:{$in:['?0']}}")
+    @Query("{genres:{$in:[?0]}}")
     public List<Book> findAll(String genre);
 
-    @Query("{pages:'?0'}")
-    public List<Book> findAll(Integer pages);
+    @Query("{?0:/?1/}") // variables between backslashs triggers the LIKE operator
+    public List<Book> filterByKey(String key, String filter);
+
+    @Query("{?0:?1}") // variables between backslashs triggers the LIKE operator
+    public List<Book> filterByKey(String key, Integer filter);
+
+    @Query("{genres:{$in:[/^?0/]}}")
+    public List<Book> filterByGenre(String filter);
 
 }
