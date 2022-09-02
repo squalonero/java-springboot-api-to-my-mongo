@@ -1,16 +1,20 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-
+import java.lang.reflect.*;
+import org.springframework.cglib.reflect.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicUpdate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.example.demo.model.Book;
-import com.example.demo.model.Generic;
 import com.example.demo.repository.BookRepository;
 
 @Service
@@ -19,16 +23,13 @@ public class BookService {
     @Autowired // Allows Spring to resolve and inject this class automatically
     private BookRepository repository;
 
+    private MongoTemplate mongoTemplate;
+
     // CREATE
     public Book createBook(Book newBook) {
-        System.out.println("Data creation started...");
+
         return repository
-                .save(new Book(
-                        newBook.getTitle(),
-                        newBook.getAuthor(),
-                        newBook.getPages(),
-                        newBook.getGenres(),
-                        newBook.getRating()));
+                .save(newBook);
     }
 
     // DESTROY ALL THE DOCUMENTS
@@ -77,27 +78,29 @@ public class BookService {
         System.out.println("Number of documents in the collection: " + count);
     }
 
-    public void updateGenreTitle(String genre) {
+    // public void updateGenreTitle(String genre) {
 
-        // Change to this new value
-        String newGenre = "teletubbies";
+    // // Change to this new value
+    // String newGenre = "teletubbies";
 
-        // Find all the items with the genre snacks
-        List<Book> list = repository.findAll(genre);
+    // // Find all the items with the genre snacks
+    // List<Book> list = repository.findAll(genre);
 
-        list.forEach(item -> {
-            // Update the genre in each document
-            int k = item.getGenres().indexOf(genre);
-            item.getGenres().set(k, newGenre);
-            System.out.println("Updating genre of " + item.getTitle() + " to " + newGenre);
-        });
+    // list.forEach(item -> {
+    // // Update the genre in each document
+    // int k = item.getGenres().indexOf(genre);
+    // item.getGenres().set(k, newGenre);
+    // System.out.println("Updating genre of " + item.getTitle() + " to " +
+    // newGenre);
+    // });
 
-        // Save all the items in database
-        List<Book> itemsUpdated = repository.saveAll(list);
+    // // Save all the items in database
+    // List<Book> itemsUpdated = repository.saveAll(list);
 
-        if (itemsUpdated != null)
-            System.out.println("Successfully updated " + itemsUpdated.size() + " items.");
-    }
+    // if (itemsUpdated != null)
+    // System.out.println("Successfully updated " + itemsUpdated.size() + "
+    // items.");
+    // }
 
     public List<Book> filterByKey(String key, String filter) {
         if (key.equals("genres"))
@@ -112,6 +115,11 @@ public class BookService {
         return repository.filterByKey(key, num);
     }
 
+    // *********************************************************** */
+    // public void modify(String key, String value) {
+    // repository.updateByKey(key, value);
+    // }
+
     // We can
     // create a
     // helper method
@@ -123,15 +131,15 @@ public class BookService {
 
     // Print details in readable form
 
-    public String getItemDetails(Book item) {
+    // public String getItemDetails(Book item) {
 
-        System.out.println(
-                "Item Title: " + item.getTitle() +
-                        ", \nAuthor: " + item.getAuthor() +
-                        ", \nGenres: " + item.getGenres());
+    // System.out.println(
+    // "Item Title: " + item.getTitle() +
+    // ", \nAuthor: " + item.getAuthor() +
+    // ", \nGenres: " + item.getGenres());
 
-        return "";
-    }
+    // return "";
+    // }
 
     // DELETE
     public void deleteBook(String id) {
@@ -143,5 +151,37 @@ public class BookService {
         } else {
             System.out.println("Could not delete item: Item not found");
         }
+    }
+
+    public void upd(String id, Book book) throws Exception {
+
+        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
+            final String fieldName = field.getName();
+
+            if (fieldName.equals("id")) {
+                continue;
+            }
+            final Method getter = Book.class.getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
+            final Object fieldValue = getter.invoke(book);
+
+            if (Objects.nonNull(fieldValue)) {
+                repository.update(id, fieldName, fieldValue);
+
+            }
+        }
+    }
+
+    public void updateItemByKey(String _id, String key, String value)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(_id));
+        Book bookToUpdate = mongoTemplate.findAndModify(query, BasicUpdate.update(key, value),
+                FindAndModifyOptions.none(), Book.class);
+        // Class cls = bookToUpdate.getClass();
+        bookToUpdate.getClass().getField(key).set(bookToUpdate, value);
+        mongoTemplate.save(bookToUpdate);
+        // bookToUpdate.get
+        // mongoTemplate.findOne(query, Book.class);
+
     }
 }

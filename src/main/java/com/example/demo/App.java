@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //required for MongoDb operations
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import com.example.demo.repository.BookRepository;
 import com.example.demo.service.BookService;
 
 @SpringBootApplication
@@ -15,6 +16,7 @@ public class App implements CommandLineRunner {
 
   @Autowired
   private BookService bookService;
+  private BookRepository bookRepository;
 
   public static void main(String[] args) {
     try {
