@@ -4,11 +4,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "books",
-    "url": "//localhost:8081/books",
+    "url": "//localhost:8081/book/list",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-09-01T12:31:07.107Z",
-    "modified": "2022-09-01T12:48:05.212Z",
+    "modified": "2022-09-02T08:39:39.450Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -18,19 +18,18 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "book",
-    "url": "//localhost:8081/book?id=631090cb9322fc63237bc013",
+    "url": "//localhost:8081/create",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-01T12:32:36.387Z",
-    "modified": "2022-09-01T12:33:07.892Z",
+    "modified": "2022-09-02T14:33:01.195Z",
     "headers": [],
-    "params": [
-      {
-        "name": "id",
-        "value": "631090cb9322fc63237bc013",
-        "isPath": false
-      }
-    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"Added from spring\",\n  \"author\": \"sqlnr\",\n  \"pages\": 125,\n  \"genres\": [\n    \"horror\",\n    \"teletubbies\"\n  ],\n  \"rating\": 1\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -38,16 +37,54 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "insert book",
-    "url": "//localhost:8081/book",
+    "url": "//localhost:8081/book/create",
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-01T13:10:56.977Z",
-    "modified": "2022-09-01T13:13:33.362Z",
+    "modified": "2022-09-02T13:18:12.343Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n  \"title\": \"Dio grugnisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ee24e74c-657e-4e89-8f02-34f8238451e1",
+    "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
+    "containerId": "",
+    "name": "edit book",
+    "url": "//localhost:8081/book/6312142ca22d7a55e32c01c1",
+    "method": "PUT",
+    "sortNum": 40000,
+    "created": "2022-09-01T15:02:37.051Z",
+    "modified": "2022-09-02T14:50:41.851Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n    \"title\": \"Dio barrisce\",\n    \"author\": \"Oidocrop\",\n    \"pages\": 1,\n    \"genres\": [\n      \"meme\",\n      \"cringe\"\n    ],\n    \"rating\": 9\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ce81c6d3-8717-4a1e-ab17-87e16304cb54",
+    "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
+    "containerId": "",
+    "name": "delete",
+    "url": "//localhost:8081/book/631203f19e45fe59e7b21f2a",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2022-09-01T15:04:03.893Z",
+    "modified": "2022-09-02T14:32:44.380Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"title\": \"Dio barrisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
       "form": []
     },
     "tests": []

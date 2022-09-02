@@ -25,6 +25,7 @@ public class App implements CommandLineRunner {
     /**
      * This application does not run any command line arguments
      */
+    System.out.println("Application started");
   }
 
   // @Override
