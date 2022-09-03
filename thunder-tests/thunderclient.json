@@ -18,18 +18,13 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "book",
-    "url": "//localhost:8081/create",
+    "url": "//localhost:8081/book/6312142ca22d7a55e32c01c1",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-01T12:32:36.387Z",
-    "modified": "2022-09-02T14:33:01.195Z",
+    "modified": "2022-09-03T13:02:51.592Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"title\": \"Added from spring\",\n  \"author\": \"sqlnr\",\n  \"pages\": 125,\n  \"genres\": [\n    \"horror\",\n    \"teletubbies\"\n  ],\n  \"rating\": 1\n}",
-      "form": []
-    },
     "tests": []
   },
   {

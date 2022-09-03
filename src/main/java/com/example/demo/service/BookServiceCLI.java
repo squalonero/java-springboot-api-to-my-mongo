@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import com.example.demo.model.Book;
 import com.example.demo.repository.BookRepository;
 
 @Service
-public class BookServiceExample {
+public class BookServiceCLI {
 
     @Autowired // Allows Spring to resolve and inject this class automatically
     private BookRepository repository;
