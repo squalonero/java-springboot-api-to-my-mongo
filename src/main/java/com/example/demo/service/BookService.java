@@ -23,15 +23,17 @@ public class BookService {
     public Book updateBook(String id, BookDto bookDto) throws Exception{
 
         Book dbBook = repo.findById(bookDto.getId()).get();
-
-        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
+        //iterate over the object and get the properties
+        for (final Field field : Book.class.getDeclaredFields()) {
+            //get each propeerty name
             final String fieldName = field.getName();
 
             if (fieldName.equals("id")) {
-                continue;
+                continue; // skip id updates
             }
+            //assemble the getter method name
             final Method getter = bookDto.getClass().getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
-            final Object fieldValue = getter.invoke(bookDto);
+            final Object fieldValue = getter.invoke(bookDto); // invoke the method for the given instance
 
             if (Objects.nonNull(fieldValue) && !fieldValue.equals("") && !fieldValue.equals(0)) {
                 BeanUtils.setProperty(dbBook, fieldName, fieldValue);
