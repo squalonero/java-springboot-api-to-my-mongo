@@ -36,12 +36,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-01T13:10:56.977Z",
-    "modified": "2022-09-02T13:18:12.343Z",
+    "modified": "2022-09-03T13:31:54.371Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"title\": \"Dio grugnisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
+      "raw": "{\n  \"title\": \"Dio urla\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
       "form": []
     },
     "tests": []
@@ -55,12 +55,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-01T15:02:37.051Z",
-    "modified": "2022-09-03T13:00:45.413Z",
+    "modified": "2022-09-03T13:32:57.584Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n  \"title\": \"Dio barrisce\",\n  \"pages\": 1,\n  \"genres\": [\n    \"asd\",\n    \"cringe\"\n  ]\n\n}",
+      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n  \"genres\": [\n    \"horror\",\n    \"cringe\"\n  ]\n}",
       "form": []
     },
     "tests": []
