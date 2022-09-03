@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.mapper.BookMapper;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookDto;
 import com.example.demo.repository.BookRepository;
@@ -40,6 +40,9 @@ public class BookController {
 
     final int PAGE_SIZE = 10;
 
+    final boolean DEBUG = true;
+
+    //get list
     @RequestMapping("/list")
     public Response list(@RequestParam(required = false, defaultValue = "0") int page) {
         Pageable paging = PageRequest.of(page, PAGE_SIZE);
@@ -47,23 +50,25 @@ public class BookController {
         try {
             pagedResult = bookRepository.findAll(paging);
         } catch (Exception e) {
+            if(DEBUG) return new Response(false, e.getMessage(), null);
             return new Response(false, "Error", null);
         }
 
         return new Response(true, "Success", pagedResult);
     }
-
+    //get item
     @RequestMapping("/{id}")
     public Response getItem(@PathVariable(value = "id") String id) {
         Book book;
         try {
             book = bookRepository.findById(id).get();
         } catch (Exception e) {
+            if(DEBUG) return new Response(false, e.getMessage(), null);
             return new Response(false, "Book not found", null);
         }
         return new Response(true, "", book);
     }
-
+    //add
     @PostMapping("/create")
     public Response createItem(@RequestBody BookDto book) {
         Book saved;
@@ -71,31 +76,43 @@ public class BookController {
             Book bookEntity = mapper.map(book, Book.class);
             saved = bookRepository.save(bookEntity);
         } catch (Exception e) {
+            if(DEBUG) return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
         }
 
         return new Response(true, "Book created", saved);
     }
-
+    //delete
     @DeleteMapping("/{id}")
     public Response deleteItem(@PathVariable(value = "id") String id) {
         try {
             bookRepository.deleteById(id);
         } catch (Exception e) {
+            if(DEBUG) return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
         }
         return new Response(true, "Book deleted successfully", null);
     }
-
+    //edit
     @PutMapping("/{id}")
     public Response updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) {
         Book dbBook;
         try {
-            if (!Objects.equals(id, bookDto.getId())) {
+            if (!Objects.equals(id, bookDto.getId()))
                 throw new IllegalArgumentException("Url Id and body Id must be the same");
-            }
+
             dbBook = service.updateBook(id, bookDto);
-        } catch (Exception e) {
+
+        }
+        catch(NoSuchElementException e) {
+            return new Response(false, "Book not found", null);
+        }
+        catch(IllegalArgumentException e)
+        {
+            return new Response(false, e.getMessage(), null);
+        }
+        catch (Exception e) {
+            if(DEBUG) return new Response(false, e.toString(), null);
             return new Response(false, "An error occurred during the update.", null);
         }
 
