@@ -4,13 +4,19 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "books",
-    "url": "//localhost:8081/book/list",
+    "url": "//localhost:8081/book/list?page=1",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-09-01T12:31:07.107Z",
-    "modified": "2022-09-02T08:39:39.450Z",
+    "modified": "2022-09-03T15:41:37.898Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
     "tests": []
   },
   {
@@ -36,12 +42,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-01T13:10:56.977Z",
-    "modified": "2022-09-03T13:31:54.371Z",
+    "modified": "2022-09-03T15:34:28.201Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"title\": \"Dio urla\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
+      "raw": "{\n  \"title\": \"Dio urla\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}\n",
       "form": []
     },
     "tests": []
@@ -55,12 +61,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-01T15:02:37.051Z",
-    "modified": "2022-09-03T14:52:27.555Z",
+    "modified": "2022-09-03T15:34:30.806Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"author\": \"A.K. Toyo\"\n}",
+      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"author\": \"A.K. Toyo\"\n}\n",
       "form": []
     },
     "tests": []
@@ -74,12 +80,12 @@
     "method": "DELETE",
     "sortNum": 50000,
     "created": "2022-09-01T15:04:03.893Z",
-    "modified": "2022-09-02T14:32:44.380Z",
+    "modified": "2022-09-03T15:34:35.812Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"title\": \"Dio barrisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}",
+      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"title\": \"Dio barrisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}\n",
       "form": []
     },
     "tests": []

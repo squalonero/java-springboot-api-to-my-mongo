@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.List;
+
 import java.util.Objects;
 
 
@@ -48,7 +48,9 @@ public class BookController {
 
     @RequestMapping("/{id}")
     public Book getItem(@PathVariable(value = "id") String id) {
-        return bookRepository.findById(id).get();
+        Book book = bookRepository.findById(id).get();
+        // todo: handle errors
+        return book;
     }
 
     @PostMapping("/create")
