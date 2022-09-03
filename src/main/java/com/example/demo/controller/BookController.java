@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.Objects;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.mapper.BookMapper;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookDto;
 import com.example.demo.repository.BookRepository;
@@ -32,6 +34,9 @@ public class BookController {
 
     @Autowired
     private BookService service;
+
+    @Autowired
+    private ModelMapper mapper;
 
     final int PAGE_SIZE = 10;
 
@@ -60,10 +65,11 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    public Response createItem(@RequestBody Book book) {
+    public Response createItem(@RequestBody BookDto book) {
         Book saved;
         try {
-            saved = bookRepository.save(book);
+            Book bookEntity = mapper.map(book, Book.class);
+            saved = bookRepository.save(bookEntity);
         } catch (Exception e) {
             return new Response(false, e.getMessage(), null);
         }

@@ -15,7 +15,8 @@ import lombok.Setter;
 
 @Entity
 @Document("books")
-@Getter @Setter
+@Getter
+@Setter
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +26,8 @@ public class Book {
     public Integer pages;
     public ArrayList<String> genres;
     public int rating;
+
+    public Book() {} // is this fine?
 
     public String getId() {
         return this.id;
