@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-
 import java.util.Objects;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -37,25 +35,40 @@ public class BookController {
 
     final int PAGE_SIZE = 10;
 
-
-
     @RequestMapping("/list")
-    public Page<Book> list(@RequestParam(required = false, defaultValue = "0") int page) {
-         Pageable paging = PageRequest.of(page, PAGE_SIZE);
+    public Response list(@RequestParam(required = false, defaultValue = "0") int page) {
+        Pageable paging = PageRequest.of(page, PAGE_SIZE);
+        Page<Book> pagedResult;
+        try {
+            pagedResult = bookRepository.findAll(paging);
+        } catch (Exception e) {
+            return new Response(false, "Error", null);
+        }
 
-        return bookRepository.findAll(paging);
+        return new Response(true, "Success", pagedResult);
     }
 
     @RequestMapping("/{id}")
-    public Book getItem(@PathVariable(value = "id") String id) {
-        Book book = bookRepository.findById(id).get();
-        // todo: handle errors
-        return book;
+    public Response getItem(@PathVariable(value = "id") String id) {
+        Book book;
+        try {
+            book = bookRepository.findById(id).get();
+        } catch (Exception e) {
+            return new Response(false, "Book not found", null);
+        }
+        return new Response(true, "", book);
     }
 
     @PostMapping("/create")
-    public Book createItem(@RequestBody Book book) {
-        return bookRepository.save(book);
+    public Response createItem(@RequestBody Book book) {
+        Book saved;
+        try {
+            saved = bookRepository.save(book);
+        } catch (Exception e) {
+            return new Response(false, e.getMessage(), null);
+        }
+
+        return new Response(true, "Book created", saved);
     }
 
     @DeleteMapping("/{id}")
@@ -63,20 +76,24 @@ public class BookController {
         try {
             bookRepository.deleteById(id);
         } catch (Exception e) {
-            return new Response(false, e.getMessage());
+            return new Response(false, e.getMessage(), null);
         }
-        return new Response(true, "Book deleted successfully");
+        return new Response(true, "Book deleted successfully", null);
     }
 
     @PutMapping("/{id}")
-    public Book updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) throws Exception {
-
-        if (!Objects.equals(id, bookDto.getId())) {
-            throw new IllegalArgumentException("Url Id and body Id must be the same");
+    public Response updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) {
+        Book dbBook;
+        try {
+            if (!Objects.equals(id, bookDto.getId())) {
+                throw new IllegalArgumentException("Url Id and body Id must be the same");
+            }
+            dbBook = service.updateBook(id, bookDto);
+        } catch (Exception e) {
+            return new Response(false, "An error occurred during the update.", null);
         }
-        Book dbBook = service.updateBook(id, bookDto);
 
-        return dbBook;
+        return new Response(true, "", dbBook);
 
     }
 
