@@ -2,8 +2,7 @@ package com.example.demo.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
+
 // @important MongoRepository includes standard CRUD operations
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -24,7 +23,5 @@ public interface BookRepository extends MongoRepository<Book, String> {
 
     @Query("{genres:{$in:['?0']}}")
     public List<Book> findAll(String genre);
-
-    Page<Book> findAll(Pageable pageable);
 
 }

@@ -1,5 +1,10 @@
 package com.example.demo.mapper;
 
+/**
+ * This file is not working atm.
+ * I still have to figure out how to make it work.
+ */
+
 
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
