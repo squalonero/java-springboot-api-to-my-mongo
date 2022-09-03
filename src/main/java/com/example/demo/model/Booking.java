@@ -31,6 +31,6 @@ public class Booking {
     public BookingStatus status;
     public Date date;
     public int numPeople;
-    public ArrayList<Passenger> people; // todo
+    public ArrayList<Passenger> passengers; // todo
 
 }

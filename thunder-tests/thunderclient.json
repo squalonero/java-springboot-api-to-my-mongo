@@ -4,11 +4,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "list",
-    "url": "//localhost:8081/booking/list?page=0",
+    "url": "//localhost:8081/book/list?page=0",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-09-01T12:31:07.107Z",
-    "modified": "2022-09-03T16:40:13.712Z",
+    "modified": "2022-09-03T19:32:52.474Z",
     "headers": [],
     "params": [
       {
@@ -24,11 +24,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "item",
-    "url": "//localhost:8081/booking/6312142ca22d7a55e32c01c1",
+    "url": "//localhost:8081/book/6312142ca22d7a55e32c01c1",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-01T12:32:36.387Z",
-    "modified": "2022-09-03T16:40:21.190Z",
+    "modified": "2022-09-03T19:32:51.438Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -38,11 +38,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "add",
-    "url": "//localhost:8081/booking/create",
+    "url": "//localhost:8081/book/create",
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-01T13:10:56.977Z",
-    "modified": "2022-09-03T16:40:05.372Z",
+    "modified": "2022-09-03T19:32:50.556Z",
     "headers": [],
     "params": [],
     "body": {
@@ -57,11 +57,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "edit",
-    "url": "//localhost:8081/booking/631217deae84ed3b545c5113",
+    "url": "//localhost:8081/book/631217deae84ed3b545c5113",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-01T15:02:37.051Z",
-    "modified": "2022-09-03T16:40:30.017Z",
+    "modified": "2022-09-03T19:32:49.636Z",
     "headers": [],
     "params": [],
     "body": {
@@ -76,11 +76,11 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "delete",
-    "url": "//localhost:8081/booking/631217deae84ed3b545c5113",
+    "url": "//localhost:8081/book/631217deae84ed3b545c5113",
     "method": "DELETE",
     "sortNum": 50000,
     "created": "2022-09-01T15:04:03.893Z",
-    "modified": "2022-09-03T16:40:36.562Z",
+    "modified": "2022-09-03T19:32:48.327Z",
     "headers": [],
     "params": [],
     "body": {
@@ -172,6 +172,108 @@
     "sortNum": 50000,
     "created": "2022-09-03T16:52:09.699Z",
     "modified": "2022-09-03T16:52:36.641Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"title\": \"Dio barrisce\",\n  \"author\":\"Oidocrop\",\n  \"pages\": 1,\n  \"genres\": [\"meme\", \"cringe\"],\n  \"rating\": 2\n}\n",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f68d313c-9cd3-4f37-a950-a406f15fabde",
+    "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
+    "containerId": "",
+    "name": "list",
+    "url": "//localhost:8081/booking/list?page=0",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2022-09-03T19:31:51.618Z",
+    "modified": "2022-09-03T19:31:51.618Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "0",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "cf9ca3a3-a522-4672-886e-4ec41fe8d089",
+    "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
+    "containerId": "",
+    "name": "item",
+    "url": "//localhost:8081/booking/6312142ca22d7a55e32c01c1?by=date&value=2022-09-01",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-09-03T19:31:51.619Z",
+    "modified": "2022-09-03T19:38:27.416Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "by",
+        "value": "date",
+        "isPath": false
+      },
+      {
+        "name": "value",
+        "value": "2022-09-01",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "b7290fe4-c7db-4a39-b90e-fb588e39f91a",
+    "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
+    "containerId": "",
+    "name": "add",
+    "url": "//localhost:8081/booking/create",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2022-09-03T19:31:51.620Z",
+    "modified": "2022-09-03T20:03:43.100Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n      \"user\": {\n        \"email\": \"test@test.it\",\n        \"phone\": \"3421234567\"\n      },\n      \"status\": \"cancelled\",\n      \"date\": \"2022-09-01\",\n      \"numPeople\": 2,\n      \"passengers\": [\n        {\n          \"name\": \"Pippo\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        },\n        {\n          \"name\": \"Pluto\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        }\n      ]\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "fa98c98d-358e-4a56-aae5-adf79f9ca8b4",
+    "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
+    "containerId": "",
+    "name": "edit",
+    "url": "//localhost:8081/booking/631217deae84ed3b545c5113",
+    "method": "PUT",
+    "sortNum": 40000,
+    "created": "2022-09-03T19:31:51.621Z",
+    "modified": "2022-09-03T19:33:53.885Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"id\": \"631217deae84ed3b545c5113\",\n  \"status\": \"cancelled\"\n}\n",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "655be99a-15b5-4996-94a8-364e827a06f1",
+    "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
+    "containerId": "",
+    "name": "delete",
+    "url": "//localhost:8081/booking/631217deae84ed3b545c5113",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2022-09-03T19:31:51.622Z",
+    "modified": "2022-09-03T19:31:51.622Z",
     "headers": [],
     "params": [],
     "body": {

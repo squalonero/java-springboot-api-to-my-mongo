@@ -44,11 +44,14 @@ public class BookingController {
 
     // get list
     @RequestMapping("/list")
-    public Response list(@RequestParam(required = false, defaultValue = "0") int page) {
+    public Response list(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false) String by,
+            @RequestParam(required = false) String value) {
         Pageable paging = PageRequest.of(page, PAGE_SIZE);
         Page<Booking> pagedResult;
         try {
-            pagedResult = bookingRepository.findAll(paging);
+            pagedResult = bookingRepository.findBy(paging, by, value);
         } catch (Exception e) {
             if (DEBUG)
                 return new Response(false, e.getMessage(), null);
@@ -63,8 +66,7 @@ public class BookingController {
     public Response getItem(@PathVariable(value = "id") String id) {
         Booking booking;
         try {
-            booking =
-             bookingRepository.findById(id).get();
+            booking = bookingRepository.findById(id).get();
         } catch (NoSuchElementException e) {
             return new Response(false, "Booking not found", null);
         } catch (Exception e) {
