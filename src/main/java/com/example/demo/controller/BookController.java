@@ -42,7 +42,7 @@ public class BookController {
 
     final boolean DEBUG = true;
 
-    //get list
+    // get list
     @RequestMapping("/list")
     public Response list(@RequestParam(required = false, defaultValue = "0") int page) {
         Pageable paging = PageRequest.of(page, PAGE_SIZE);
@@ -50,25 +50,29 @@ public class BookController {
         try {
             pagedResult = bookRepository.findAll(paging);
         } catch (Exception e) {
-            if(DEBUG) return new Response(false, e.getMessage(), null);
+            if (DEBUG)
+                return new Response(false, e.getMessage(), null);
             return new Response(false, "Error", null);
         }
 
         return new Response(true, "Success", pagedResult);
     }
-    //get item
+
+    // get item
     @RequestMapping("/{id}")
     public Response getItem(@PathVariable(value = "id") String id) {
         Book book;
         try {
             book = bookRepository.findById(id).get();
         } catch (Exception e) {
-            if(DEBUG) return new Response(false, e.getMessage(), null);
+            if (DEBUG)
+                return new Response(false, e.getMessage(), null);
             return new Response(false, "Book not found", null);
         }
         return new Response(true, "", book);
     }
-    //add
+
+    // add
     @PostMapping("/create")
     public Response createItem(@RequestBody BookDto book) {
         Book saved;
@@ -76,24 +80,28 @@ public class BookController {
             Book bookEntity = mapper.map(book, Book.class);
             saved = bookRepository.save(bookEntity);
         } catch (Exception e) {
-            if(DEBUG) return new Response(false, e.getMessage(), null);
+            if (DEBUG)
+                return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
         }
 
         return new Response(true, "Book created", saved);
     }
-    //delete
+
+    // delete
     @DeleteMapping("/{id}")
     public Response deleteItem(@PathVariable(value = "id") String id) {
         try {
             bookRepository.deleteById(id);
         } catch (Exception e) {
-            if(DEBUG) return new Response(false, e.getMessage(), null);
+            if (DEBUG)
+                return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
         }
         return new Response(true, "Book deleted successfully", null);
     }
-    //edit
+
+    // edit
     @PutMapping("/{id}")
     public Response updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) {
         Book dbBook;
@@ -103,16 +111,13 @@ public class BookController {
 
             dbBook = service.updateBook(id, bookDto);
 
-        }
-        catch(NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return new Response(false, "Book not found", null);
-        }
-        catch(IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             return new Response(false, e.getMessage(), null);
-        }
-        catch (Exception e) {
-            if(DEBUG) return new Response(false, e.toString(), null);
+        } catch (Exception e) {
+            if (DEBUG)
+                return new Response(false, e.toString(), null);
             return new Response(false, "An error occurred during the update.", null);
         }
 
