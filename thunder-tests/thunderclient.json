@@ -60,12 +60,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-01T15:02:37.051Z",
-    "modified": "2022-09-02T14:50:41.851Z",
+    "modified": "2022-09-03T13:00:45.413Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n    \"title\": \"Dio barrisce\",\n    \"author\": \"Oidocrop\",\n    \"pages\": 1,\n    \"genres\": [\n      \"meme\",\n      \"cringe\"\n    ],\n    \"rating\": 9\n}",
+      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n  \"title\": \"Dio barrisce\",\n  \"pages\": 1,\n  \"genres\": [\n    \"asd\",\n    \"cringe\"\n  ]\n\n}",
       "form": []
     },
     "tests": []

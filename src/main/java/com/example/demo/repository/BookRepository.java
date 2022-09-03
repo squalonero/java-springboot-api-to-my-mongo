@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Book;
+// import com.example.demo.model.BookDto;
 
 @Repository
 public interface BookRepository extends MongoRepository<Book, String> {
@@ -21,5 +22,6 @@ public interface BookRepository extends MongoRepository<Book, String> {
 
     @Query("{genres:{$in:['?0']}}")
     public List<Book> findAll(String genre);
+
 
 }

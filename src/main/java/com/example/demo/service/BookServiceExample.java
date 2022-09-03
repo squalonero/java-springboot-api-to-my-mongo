@@ -128,9 +128,9 @@ public class BookServiceExample {
     // DELETE
     public void deleteBook(String id) {
         // this comes from MongoRepository interface
-        Optional<Book> bookToDelete = repository.findById(id);
-        if (!bookToDelete.isEmpty()) {
-            repository.delete(bookToDelete.get());
+        Book bookToDelete = repository.findById(id).get();
+        if (!bookToDelete.equals(null)) {
+            repository.delete(bookToDelete);
             System.out.println("Item deleted successfully");
         } else {
             System.out.println("Could not delete item: Item not found");
