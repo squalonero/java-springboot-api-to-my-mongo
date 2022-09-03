@@ -51,16 +51,16 @@
     "colId": "82444140-59f3-4bbd-9a8f-7b0cb69978b1",
     "containerId": "",
     "name": "edit book",
-    "url": "//localhost:8081/book/6312142ca22d7a55e32c01c1",
+    "url": "//localhost:8081/book/6310c9482f562074e67952cf",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-01T15:02:37.051Z",
-    "modified": "2022-09-03T13:32:57.584Z",
+    "modified": "2022-09-03T14:52:27.555Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"6312142ca22d7a55e32c01c1\",\n  \"genres\": [\n    \"horror\",\n    \"cringe\"\n  ]\n}",
+      "raw": "{\n  \"id\": \"6310c9482f562074e67952cf\",\n  \"author\": \"A.K. Toyo\"\n}",
       "form": []
     },
     "tests": []

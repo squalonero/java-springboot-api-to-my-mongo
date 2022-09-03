@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
 import java.lang.reflect.Field;
-// import java.text.ParseException;
-// import java.util.Arrays;
+import java.lang.reflect.Method;
+import java.util.Objects;
 
-// import org.modelmapper.ModelMapper;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 // import com.example.demo.mapper.BookMapper;
 import com.example.demo.model.Book;
@@ -17,36 +18,27 @@ import com.example.demo.repository.BookRepository;
 public class BookService {
 
     @Autowired // Allows Spring to resolve and inject this class automatically
-    private BookRepository repository;
+    private BookRepository repo;
 
-    // @Autowired
-    // private ModelMapper mapper;
+    public Book updateBook(String id, BookDto bookDto) throws Exception{
 
-    // @Autowired
-    // private BookMapper bookMapper;
+        Book dbBook = repo.findById(bookDto.getId()).get();
 
-    // public Book updateBook(BookDto dto){
-    //     try {
-    //         Book dbBook = repository.findById(dto.getId()).get();
-    //         return repository.save(dto);
-    //     } catch (Exception e) {
-    //         throw new RuntimeException("Book not found");
-    //     }
-    // }
+        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
+            final String fieldName = field.getName();
 
-    public Book updateBook(BookDto dto) throws Exception{
-        try {
-            Book dbBook = repository.findById(dto.getId()).get();
-            Field[] fields = Book.class.getDeclaredFields();
-            for (Field field : fields) {
-                field.setAccessible(true);
-                if(field.get(dto) != null)
-                    field.set(dbBook, field.get(dto));
+            if (fieldName.equals("id")) {
+                continue;
             }
-            return repository.save(dbBook);
-        } catch (Exception e) {
-             throw new RuntimeException(e.getMessage() + "\n\n\n");
+            final Method getter = bookDto.getClass().getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
+            final Object fieldValue = getter.invoke(bookDto);
+
+            if (Objects.nonNull(fieldValue) && !fieldValue.equals("") && !fieldValue.equals(0)) {
+                BeanUtils.setProperty(dbBook, fieldName, fieldValue);
+            }
         }
+        repo.save(dbBook);
+        return dbBook;
     }
 
 }

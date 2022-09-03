@@ -2,12 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 import java.util.Objects;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookDto;
 import com.example.demo.repository.BookRepository;
-// import com.example.demo.service.BookService;
+import com.example.demo.service.BookService;
 import com.example.demo.utils.Response;
 
 @RestController
@@ -31,8 +27,8 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-    // @Autowired
-    // private BookService service;
+    @Autowired
+    private BookService service;
 
     @RequestMapping("/list")
     public List<Book> list() {
@@ -60,28 +56,14 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public Book updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public Book updateItem(@PathVariable("id") String id, @RequestBody BookDto bookDto) throws Exception {
 
         if (!Objects.equals(id, bookDto.getId())) {
-            throw new IllegalArgumentException("IDs don't match");
+            throw new IllegalArgumentException("Url Id and body Id must be the same");
         }
+        Book dbBook = service.updateBook(id, bookDto);
 
-        Book dbBook = bookRepository.findById(id).get();
-
-        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
-            final String fieldName = field.getName();
-
-            if (fieldName.equals("id")) {
-                continue;
-            }
-            final Method getter = bookDto.getClass().getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
-            final Object fieldValue = getter.invoke(bookDto);
-
-            if (Objects.nonNull(fieldValue) && !fieldValue.equals("") && !fieldValue.equals(0)) {
-                BeanUtils.setProperty(dbBook, fieldName, fieldValue);
-            }
-        }
-        return bookRepository.save(dbBook);
+        return dbBook;
 
     }
 
