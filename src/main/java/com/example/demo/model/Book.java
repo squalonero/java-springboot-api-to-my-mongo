@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 // import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Document("books")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +28,6 @@ public class Book {
     public Integer pages;
     public ArrayList<String> genres;
     public int rating;
-
-    public Book() {} // is this fine?
 
     public String getId() {
         return this.id;

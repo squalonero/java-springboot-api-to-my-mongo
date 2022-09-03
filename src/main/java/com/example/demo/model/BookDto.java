@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor // <--- THIS is it
+@Getter
+@Setter
+@NoArgsConstructor
 public class BookDto {
     @Id
     private String id;

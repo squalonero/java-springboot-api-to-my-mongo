@@ -64,7 +64,11 @@ public class BookController {
         Book book;
         try {
             book = bookRepository.findById(id).get();
-        } catch (Exception e) {
+        }
+        catch (NoSuchElementException e) {
+            return new Response(false, "Book not found", null);
+        }
+        catch (Exception e) {
             if (DEBUG)
                 return new Response(false, e.getMessage(), null);
             return new Response(false, "Book not found", null);
@@ -79,7 +83,11 @@ public class BookController {
         try {
             Book bookEntity = mapper.map(book, Book.class);
             saved = bookRepository.save(bookEntity);
-        } catch (Exception e) {
+        }
+        catch (NoSuchElementException e) {
+            return new Response(false, "Book not found", null);
+        }
+        catch (Exception e) {
             if (DEBUG)
                 return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
@@ -93,7 +101,11 @@ public class BookController {
     public Response deleteItem(@PathVariable(value = "id") String id) {
         try {
             bookRepository.deleteById(id);
-        } catch (Exception e) {
+        }
+        catch (NoSuchElementException e) {
+            return new Response(false, "Book not found", null);
+        }
+        catch (Exception e) {
             if (DEBUG)
                 return new Response(false, e.getMessage(), null);
             return new Response(false, e.getMessage(), null);
