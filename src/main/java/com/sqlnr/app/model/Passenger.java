@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Document("user")
+@Document("passenger")
 @Getter
 @Setter
 @NoArgsConstructor

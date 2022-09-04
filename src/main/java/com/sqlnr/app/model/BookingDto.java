@@ -1,6 +1,5 @@
 package com.sqlnr.app.model;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,11 +17,11 @@ import lombok.Setter;
 public class BookingDto {
     @Id
     public String id;
-    public User user; // todo
+    public UserDto user; // todo
     public BookingStatus status;
     public Date date;
     public int numPeople;
-    public ArrayList<Passenger> passengers; // todo
+    public ArrayList<PassengerDto> passengers; // todo
 
     public String getId() {
         return this.id;
@@ -32,11 +31,11 @@ public class BookingDto {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return this.user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 
@@ -64,11 +63,11 @@ public class BookingDto {
         this.numPeople = numPeople;
     }
 
-    public ArrayList<Passenger> getPassengers() {
+    public ArrayList<PassengerDto> getPassengers() {
         return this.passengers;
     }
 
-    public void setPassengers(ArrayList<Passenger> passengers) {
+    public void setPassengers(ArrayList<PassengerDto> passengers) {
         this.passengers = passengers;
     }
 

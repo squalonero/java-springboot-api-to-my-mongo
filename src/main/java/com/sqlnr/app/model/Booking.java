@@ -1,6 +1,5 @@
 package com.sqlnr.app.model;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,7 +14,6 @@ import com.sqlnr.app.model.types.BookingStatus;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-// import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
