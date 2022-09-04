@@ -5,9 +5,7 @@ import java.util.Objects;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sqlnr.app.model.Booking;
 import com.sqlnr.app.model.BookingDto;
-import com.sqlnr.app.repository.BookingRepository;
 import com.sqlnr.app.service.BookingService;
 import com.sqlnr.app.utils.Response;
 
@@ -30,15 +27,10 @@ import com.sqlnr.app.utils.Response;
 public class BookingController {
 
     @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
     private BookingService service;
 
     @Autowired
     private ModelMapper mapper;
-
-    final int PAGE_SIZE = 10;
 
     final boolean DEBUG = true;
 
@@ -48,10 +40,9 @@ public class BookingController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) String by,
             @RequestParam(required = false) String value) {
-        Pageable paging = PageRequest.of(page, PAGE_SIZE);
         Page<Booking> pagedResult;
         try {
-            pagedResult = bookingRepository.findBy(paging, by, value);
+            pagedResult = service.findBy(page, by, value);
         } catch (Exception e) {
             if (DEBUG)
                 return new Response(false, e.getMessage(), null);
@@ -66,7 +57,7 @@ public class BookingController {
     public Response getItem(@PathVariable(value = "id") String id) {
         Booking booking;
         try {
-            booking = bookingRepository.findById(id).get();
+            booking = service.findById(id);
         } catch (NoSuchElementException e) {
             return new Response(false, "Booking not found", null);
         } catch (Exception e) {
@@ -83,8 +74,7 @@ public class BookingController {
         Booking saved;
         try {
             Booking bookingEntity = mapper.map(booking, Booking.class);
-            //@todo: server side validation
-            saved = bookingRepository.save(bookingEntity);
+            saved = service.save(bookingEntity);
         } catch (NoSuchElementException e) {
             return new Response(false, "Booking not found", null);
         } catch (Exception e) {
@@ -100,7 +90,7 @@ public class BookingController {
     @DeleteMapping("/{id}")
     public Response deleteItem(@PathVariable(value = "id") String id) {
         try {
-            bookingRepository.deleteById(id);
+            service.deleteById(id);
         } catch (NoSuchElementException e) {
             return new Response(false, "Booking not found", null);
         } catch (Exception e) {
@@ -118,7 +108,6 @@ public class BookingController {
         try {
             if (!Objects.equals(id, bookingDto.getId()))
                 throw new IllegalArgumentException("Url Id and body Id must be the same");
-            //@todo: server side validation
             dbBooking = service.updateBooking(id, bookingDto);
 
         } catch (NoSuchElementException e) {

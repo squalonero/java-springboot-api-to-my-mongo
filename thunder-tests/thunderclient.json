@@ -186,16 +186,16 @@
     "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
     "containerId": "",
     "name": "list",
-    "url": "//localhost:8081/booking/list?page=0",
+    "url": "//localhost:8081/booking/list?page=1",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-09-03T19:31:51.618Z",
-    "modified": "2022-09-03T19:31:51.618Z",
+    "modified": "2022-09-04T11:01:39.718Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "0",
+        "value": "1",
         "isPath": false
       }
     ],
@@ -206,24 +206,13 @@
     "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
     "containerId": "",
     "name": "item",
-    "url": "//localhost:8081/booking/6312142ca22d7a55e32c01c1?by=date&value=2022-09-01",
+    "url": "//localhost:8081/booking/6313b2f32757ba1eff77b0a3",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-09-03T19:31:51.619Z",
-    "modified": "2022-09-03T19:38:27.416Z",
+    "modified": "2022-09-04T11:10:17.795Z",
     "headers": [],
-    "params": [
-      {
-        "name": "by",
-        "value": "date",
-        "isPath": false
-      },
-      {
-        "name": "value",
-        "value": "2022-09-01",
-        "isPath": false
-      }
-    ],
+    "params": [],
     "tests": []
   },
   {
@@ -235,12 +224,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-03T19:31:51.620Z",
-    "modified": "2022-09-03T20:03:43.100Z",
+    "modified": "2022-09-04T11:11:13.059Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n      \"user\": {\n        \"email\": \"test@test.it\",\n        \"phone\": \"3421234567\"\n      },\n      \"status\": \"cancelled\",\n      \"date\": \"2022-09-01\",\n      \"numPeople\": 2,\n      \"passengers\": [\n        {\n          \"name\": \"Pippo\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        },\n        {\n          \"name\": \"Pluto\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        }\n      ]\n    }",
+      "raw": "{\n      \"user\": {\n        \"email\": \"test@test.it\",\n        \"phone\": \"3421234567\"\n      },\n      \"status\": \"pending\",\n      \"date\": \"2022-09-15\",\n      \"numPeople\": 2,\n      \"passengers\": [\n        {\n          \"name\": \"Pippo\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        },\n        {\n          \"name\": \"Pluto\",\n          \"lastName\": \"Baudo\",\n          \"birthDate\": \"1994-06-22\"\n        },\n        {\n          \"name\": \"John\",\n          \"lastName\": \"Doe\",\n          \"birthDate\": \"1994-06-22\"\n        }\n      ]\n    }",
       "form": []
     },
     "tests": []
@@ -250,16 +239,16 @@
     "colId": "69e911df-400c-4731-8e1b-7c72da147eac",
     "containerId": "",
     "name": "edit",
-    "url": "//localhost:8081/booking/631217deae84ed3b545c5113",
+    "url": "//localhost:8081/booking/6313b3202757ba1eff77b0a7",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-09-03T19:31:51.621Z",
-    "modified": "2022-09-03T19:33:53.885Z",
+    "modified": "2022-09-04T11:11:35.439Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"id\": \"631217deae84ed3b545c5113\",\n  \"status\": \"cancelled\"\n}\n",
+      "raw": "{\n  \"id\": \"6313b3202757ba1eff77b0a7\",\n  \"status\": \"pending\"\n}\n",
       "form": []
     },
     "tests": []
