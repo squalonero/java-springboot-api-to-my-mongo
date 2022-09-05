@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.model.Book;
 
 @Repository
@@ -25,13 +26,13 @@ public interface BookRepository extends MongoRepository<Book, String> {
     public List<Book> findAll(String genre);
 
     @Query("{?0:/?1/}") // variables between backslashs triggers the LIKE operator
-    public List<Book> filterByKey(String key, String filter);
+    public List<Book> filterByKey(String key, Object filter);
 
     @Query("{?0:?1}") // variables between backslashs triggers the LIKE operator
     public List<Book> filterByKey(String key, Integer filter);
 
     @Query("{genres:{$in:[/^?0/]}}")
-    public List<Book> filterByGenre(String filter);
+    public List<Book> filterByGenre(Object filter);
 
     @Query("{id:?0}")
     @Update("{$set:{?1:?2}}")

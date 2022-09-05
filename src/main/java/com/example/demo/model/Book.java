@@ -6,11 +6,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Document("books")
-@Getter
-@Setter
+@Getter // Create all getters from lombok
+@Setter // Create all setters from lombok
+@NoArgsConstructor // needed if you have to create a DTO for handling convertion
+
 public class Book {
     @Id
     private String id;

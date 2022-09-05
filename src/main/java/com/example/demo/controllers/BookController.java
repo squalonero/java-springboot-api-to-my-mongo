@@ -24,9 +24,6 @@ public class BookController {
     @Autowired
     private BookService service;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     ObjectMapper obj = new ObjectMapper();
 
     // Request for all books in collection
@@ -37,20 +34,20 @@ public class BookController {
 
     // filter list by key needs to specify the key and the filter value
     // now works only for strings values
-    @RequestMapping("/filterByTitle")
-    public List<Book> findByTitle(@RequestParam String key, String filter) {
-        return service.filterByKey(key, filter);
-    }
+    // @RequestMapping("/filterByTitle")
+    // public List<Book> findByTitle(@RequestParam String key, String filter) {
+    // return service.filterByKey(key, filter);
+    // }
 
     @RequestMapping("/filterByKey")
-    public List<Book> findByKey(@RequestParam String key, String filter) {
-        return service.filterByKey(key, filter);
+    public List<Book> findByKey(@RequestBody BookDto filter) throws Exception {
+        return service.filterByKey(filter);
     }
 
     // Insert new Book in DB
     @PostMapping("/create") // path endpoint
-    public BookDto create(@RequestBody Book book) {
-        return convertToDto(service.createBook(book));
+    public Book create(@RequestBody BookDto book) {
+        return service.createBook(book);
     }
 
     // update one or more fields of an object in collection specified by id ()
@@ -70,16 +67,6 @@ public class BookController {
     @PostMapping("/delete")
     public void delete(@RequestParam String id) {
         service.deleteBook(id);
-    }
-
-    private BookDto convertToDto(Book book) {
-        BookDto bookDto = modelMapper.map(book, BookDto.class);
-        return bookDto;
-    }
-
-    private Book convertToEntity(BookDto book) {
-        Book bookDto = modelMapper.map(book, Book.class);
-        return bookDto;
     }
 
     // @RequestMapping("/object")

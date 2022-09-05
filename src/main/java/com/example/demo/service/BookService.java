@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.lang.reflect.*;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.model.Book;
 import com.example.demo.repository.BookRepository;
 
@@ -16,25 +21,48 @@ public class BookService {
 
     @Autowired // Allows Spring to resolve and inject this class automatically
     private BookRepository repository;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    // Utils converting entities in dto and vice versa
+
+    private BookDto convertToDto(Book book) {
+        BookDto bookDto = modelMapper.map(book, BookDto.class);
+        return bookDto;
+    }
+
+    private Book convertToEntity(BookDto book) {
+        Book bookDto = modelMapper.map(book, Book.class);
+        return bookDto;
+    }
 
     // CREATE
-    public Book createBook(Book newBook) {
+    public Book createBook(BookDto newBook) {
 
-        return repository
-                .save(newBook);
+        try {
+            Book book = convertToEntity(newBook);
+            return repository.save(book);
+        } catch (Error e) {
+            return null;
+        }
     }
 
     // DESTROY ALL THE DOCUMENTS
     public void deleteAllBooks() {
-        System.out.println("Data deletion started...");
         repository.deleteAll();
-        System.out.println("Data deletion complete...");
     }
 
     // READ
     // 1. Show all the data
     public Object showAllBooks() {
-        return repository.findAll();
+        List<Book> res = repository.findAll();
+        List<BookDto> list = new ArrayList<BookDto>();
+
+        for (Book book : res) {
+            list.add(convertToDto(book));
+        }
+        return list;
+
     }
 
     // 2. Get item by title
@@ -72,14 +100,17 @@ public class BookService {
             if (fieldName.equals("id")) {
                 continue;
             }
+
             final Method getter = Book.class.getDeclaredMethod("get" +
                     StringUtils.capitalize(fieldName));
+
             final Object fieldValue = getter.invoke(book);
-            System.out.println(fieldValue);
 
             if (Objects.nonNull(fieldValue)) {
+
                 repository.updateByKey(bookId, fieldName, fieldValue);
             }
+
         }
     }
 
@@ -113,17 +144,32 @@ public class BookService {
     // items.");
     // }
 
-    public List<Book> filterByKey(String key, String filter) {
-        if (key.equals("genres"))
-            return repository.filterByGenre(filter);
+    public List<Book> filterByKey(BookDto filter) throws Exception {
 
-        Integer num;
-        try {
-            num = Integer.parseInt(filter);
-        } catch (NumberFormatException nfe) {
-            return repository.filterByKey(key, filter);
+        for (final Field key : BookDto.class.getDeclaredFields()) {
+
+            final String fieldName = key.getName();
+            final Class<?> fieldType = key.getType();
+
+            final Method getter = BookDto.class.getDeclaredMethod("get" +
+                    StringUtils.capitalize(fieldName));
+
+            final Object filterValue = getter.invoke(filter);
+
+            if (Objects.nonNull(filterValue)) {
+
+                if (fieldType.isArray())
+                    return repository.filterByGenre(filterValue);
+
+                if (fieldType.equals(Integer.TYPE))
+                    return repository.filterByKey(fieldName, (Integer) filterValue);
+
+                return repository.filterByKey(fieldName, filterValue);
+            }
+
         }
-        return repository.filterByKey(key, num);
+
+        return null;
     }
 
     // We can
