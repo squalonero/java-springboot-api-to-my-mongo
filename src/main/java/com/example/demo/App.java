@@ -1,22 +1,22 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //required for MongoDb operations
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.example.demo.repository.BookRepository;
-import com.example.demo.service.BookService;
+// import com.example.demo.repository.BookRepository;
+// import com.example.demo.service.BookService;
 
 @SpringBootApplication
 @EnableMongoRepositories
 public class App implements CommandLineRunner {
 
-  @Autowired
-  private BookService bookService;
-  private BookRepository bookRepository;
+  // @Autowired
+  // private BookService bookService;
+  // private BookRepository bookRepository;
 
   public static void main(String[] args) {
     try {

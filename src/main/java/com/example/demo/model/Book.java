@@ -18,9 +18,9 @@ public class Book {
     private String author;
     private Integer pages;
     private ArrayList<String> genres;
-    private int rating;
+    private Integer rating;
 
-    public Book(String title, String author, Integer pages, ArrayList<String> genres, int rating) {
+    public Book(String title, String author, Integer pages, ArrayList<String> genres, Integer rating) {
         this.title = title;
         this.author = author;
         this.pages = pages;

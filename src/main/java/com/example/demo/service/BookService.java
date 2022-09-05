@@ -75,6 +75,7 @@ public class BookService {
             final Method getter = Book.class.getDeclaredMethod("get" +
                     StringUtils.capitalize(fieldName));
             final Object fieldValue = getter.invoke(book);
+            System.out.println(fieldValue);
 
             if (Objects.nonNull(fieldValue)) {
                 repository.updateByKey(bookId, fieldName, fieldValue);
