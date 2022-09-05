@@ -4,13 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.lang.reflect.*;
-import org.springframework.cglib.reflect.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicUpdate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -22,8 +16,6 @@ public class BookService {
 
     @Autowired // Allows Spring to resolve and inject this class automatically
     private BookRepository repository;
-
-    private MongoTemplate mongoTemplate;
 
     // CREATE
     public Book createBook(Book newBook) {
@@ -72,6 +64,24 @@ public class BookService {
 
     }
 
+    public void updatePartial(String bookId, Book book) throws Exception {
+
+        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
+            final String fieldName = field.getName();
+
+            if (fieldName.equals("id")) {
+                continue;
+            }
+            final Method getter = Book.class.getDeclaredMethod("get" +
+                    StringUtils.capitalize(fieldName));
+            final Object fieldValue = getter.invoke(book);
+
+            if (Objects.nonNull(fieldValue)) {
+                repository.updateByKey(bookId, fieldName, fieldValue);
+            }
+        }
+    }
+
     // 4. Get count of documents in the collection
     public void findCountOfBooks() {
         long count = repository.count();
@@ -115,11 +125,6 @@ public class BookService {
         return repository.filterByKey(key, num);
     }
 
-    // *********************************************************** */
-    // public void modify(String key, String value) {
-    // repository.updateByKey(key, value);
-    // }
-
     // We can
     // create a
     // helper method
@@ -153,35 +158,19 @@ public class BookService {
         }
     }
 
-    public void upd(String id, Book book) throws Exception {
+    // public void updateItemByKey(String _id, String key, String value)
+    // throws IllegalArgumentException, IllegalAccessException,
+    // NoSuchFieldException, SecurityException {
+    // Query query = new Query();
+    // query.addCriteria(Criteria.where("_id").is(_id));
+    // Book bookToUpdate = mongoTemplate.findAndModify(query,
+    // BasicUpdate.update(key, value),
+    // FindAndModifyOptions.none(), Book.class);
+    // // Class cls = bookToUpdate.getClass();
+    // bookToUpdate.getClass().getField(key).set(bookToUpdate, value);
+    // mongoTemplate.save(bookToUpdate);
+    // // bookToUpdate.get
+    // // mongoTemplate.findOne(query, Book.class);
 
-        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
-            final String fieldName = field.getName();
-
-            if (fieldName.equals("id")) {
-                continue;
-            }
-            final Method getter = Book.class.getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
-            final Object fieldValue = getter.invoke(book);
-
-            if (Objects.nonNull(fieldValue)) {
-                repository.update(id, fieldName, fieldValue);
-
-            }
-        }
-    }
-
-    public void updateItemByKey(String _id, String key, String value)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(_id));
-        Book bookToUpdate = mongoTemplate.findAndModify(query, BasicUpdate.update(key, value),
-                FindAndModifyOptions.none(), Book.class);
-        // Class cls = bookToUpdate.getClass();
-        bookToUpdate.getClass().getField(key).set(bookToUpdate, value);
-        mongoTemplate.save(bookToUpdate);
-        // bookToUpdate.get
-        // mongoTemplate.findOne(query, Book.class);
-
-    }
+    // }
 }

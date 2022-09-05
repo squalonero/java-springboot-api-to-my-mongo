@@ -18,20 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.BookDto;
 import com.example.demo.model.Book;
-import com.example.demo.repository.BookRepository;
-import com.example.demo.repository.CustomBookRepository;
+
 import com.example.demo.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.model.Field;
 
 @RestController
 
 public class BookController {
     @Autowired
     private BookService service;
-
-    @Autowired
-    private CustomBookRepository customBookRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -62,28 +57,11 @@ public class BookController {
         return convertToDto(service.createBook(book));
     }
 
+    // update one or more fields of an object in collection specified by id ()
     @PutMapping("/mod/{id}")
-    public void mod(@PathVariable final String id, @RequestBody final Book book) {
-
-    }
-
-    @PatchMapping("/modify/{bookId}")
-    public void modify(@PathVariable final String bookId, @RequestBody final Book book) throws Exception {
-
-        for (final java.lang.reflect.Field field : Book.class.getDeclaredFields()) {
-            final String fieldName = field.getName();
-
-            if (fieldName.equals("id")) {
-                continue;
-            }
-            final Method getter = Book.class.getDeclaredMethod("get" + StringUtils.capitalize(fieldName));
-            final Object fieldValue = getter.invoke(book);
-
-            if (Objects.nonNull(fieldValue)) {
-                customBookRepository.partialUpdate(bookId, fieldName, fieldValue);
-            }
-        }
-
+    public void mod(@PathVariable final String id, @RequestBody final Book book)
+            throws Exception {
+        service.updatePartial(id, book);
     }
 
     // Find all books that matches a specific genre - needs query parameter
@@ -100,6 +78,11 @@ public class BookController {
 
     private BookDto convertToDto(Book book) {
         BookDto bookDto = modelMapper.map(book, BookDto.class);
+        return bookDto;
+    }
+
+    private Book convertToEntity(BookDto book) {
+        Book bookDto = modelMapper.map(book, Book.class);
         return bookDto;
     }
 

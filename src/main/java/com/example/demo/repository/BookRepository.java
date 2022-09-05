@@ -2,7 +2,6 @@ package com.example.demo.repository;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 // @important MongoRepository includes standard CRUD operations
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Book;
 
 @Repository
-public interface BookRepository extends MongoRepository<Book, String>, CustomBookRepository {
+public interface BookRepository extends MongoRepository<Book, String> {
 
     @Query("{title:?0}") // query annotation marks this method as a query method with required parameter
     public Book findByTitle(String title);
@@ -35,7 +34,7 @@ public interface BookRepository extends MongoRepository<Book, String>, CustomBoo
     public List<Book> filterByGenre(String filter);
 
     @Query("{id:?0}")
-    @Update("{$set: {/?1/:?2}}")
-    public void update(String id, String key, Object value);
+    @Update("{$set:{?1:?2}}")
+    public void updateByKey(String id, String key, Object value);
 
 }
